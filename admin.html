@@ -1,0 +1,18 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Ответы 🎀</title>
+<style>body{font:16px system-ui;background:#ffe3ee;color:#5a2f2f;margin:0;padding:20px}main{max-width:900px;margin:auto;background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 24px #ff6fa533}
+input,button{font:inherit;padding:10px;border-radius:12px;border:1px solid #ffb3cf;margin:4px 0}button{background:#ff6fa5;color:#fff;border:0;cursor:pointer}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #ffd6e6;text-align:left;vertical-align:top}.w{overflow-x:auto}</style></head><body><main>
+<h1>Ответы 💌</h1>
+<form id="f"><input id="e" type="email" placeholder="email" autocomplete="username" required><br><input id="p" type="password" placeholder="пароль" autocomplete="current-password" required><br><button>Войти</button></form>
+<p id="m" role="status"></p><div class="w"><table id="t" hidden><thead><tr><th>Когда</th><th>День</th><th>Время</th><th>План</th></tr></thead><tbody></tbody></table></div>
+<script src="config.js"></script><script>
+const C=CONFIG,$=id=>document.getElementById(id);
+$('f').onsubmit=async ev=>{ev.preventDefault();$('m').textContent='Входим…';
+try{let r=await fetch(C.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:C.key,'Content-Type':'application/json'},body:JSON.stringify({email:$('e').value,password:$('p').value})});
+if(!r.ok)throw 0;const {access_token}=await r.json();
+r=await fetch(C.url+'/rest/v1/responses?select=*&order=created_at.desc',{headers:{apikey:C.key,Authorization:'Bearer '+access_token}});
+if(!r.ok)throw 0;const rows=await r.json(),tb=$('t').tBodies[0];tb.innerHTML='';
+rows.forEach(x=>{const tr=tb.insertRow();[new Date(x.created_at).toLocaleString('ru'),x.day,x.custom_time||x.time_slot,x.custom_plan||x.plan].forEach(v=>tr.insertCell().textContent=v)});
+$('t').hidden=false;$('f').hidden=true;$('m').textContent=rows.length?'':'Пока ответов нет 🤍'}catch{$('m').textContent='Не удалось войти или загрузить ответы. Проверь данные и config.js.'}};
+</script></main></body></html>

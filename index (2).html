@@ -1,0 +1,116 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Для тебя 🎀</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff6fa5;--soft:#ffe3ee;--bg:#ffd1e3;--ink:#5a2f2f;--blue:#d9efff;--cream:#fff6e6}
+*{box-sizing:border-box}html,body{margin:0}
+body{font:17px/1.4 Fredoka,system-ui,sans-serif;color:var(--ink);min-height:100vh;
+background:radial-gradient(circle at 20% 10%,#fff 0 2px,transparent 3px) 0 0/38px 38px,linear-gradient(160deg,#ffe3ee,var(--bg))}
+.script{font-family:Pacifico,cursive;color:var(--pink)}
+.screen{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:20px 14px;text-align:center}
+.screen.on{display:flex;animation:in .5s ease}@keyframes in{from{opacity:0;transform:scale(.97)}}
+.card{background:#fffdf9;border:3px solid #fff;border-radius:32px;box-shadow:0 12px 36px #ff6fa555;padding:22px 18px;width:100%;max-width:520px;position:relative}
+h1{font-size:clamp(26px,7vw,38px);margin:.3em 0}h2{font-size:21px;margin:.8em 0 .4em}p{margin:.3em 0}
+.kitty{width:min(250px,70vw)}.bow{transform-origin:140px 40px;animation:sway 3s ease-in-out infinite}@keyframes sway{50%{transform:rotate(8deg)}}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.opt{font:inherit;color:inherit;background:var(--cream);border:2px solid #ffd0e1;border-radius:20px;padding:12px 8px;cursor:pointer;transition:.2s}
+.opt:hover{transform:translateY(-2px);border-color:var(--pink)}
+.opt[aria-pressed=true]{background:#fff;border-color:var(--pink);box-shadow:0 0 0 4px #ff6fa533,0 0 18px #ff6fa588;transform:scale(1.03)}
+.opt b{display:block;font-size:22px}.plans{grid-template-columns:1fr}.plans .opt{text-align:left}
+.btn{font:inherit;font-weight:600;border:0;border-radius:999px;cursor:pointer;color:#fff;background:linear-gradient(135deg,#ff8cb8,var(--pink));padding:14px 28px;font-size:20px;box-shadow:0 6px 18px #ff6fa588;transition:.2s}
+.btn:hover:not(:disabled){transform:scale(1.06);box-shadow:0 0 28px #ff6fa5}.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.45;cursor:not-allowed}.btn.big{font-size:24px;padding:16px 36px;animation:glow 2s infinite}
+@keyframes glow{50%{box-shadow:0 0 30px 6px #ff6fa588}}
+.no{position:absolute;font:inherit;background:var(--blue);border:0;border-radius:999px;padding:8px 16px;cursor:pointer;color:var(--ink);transition:left .45s ease,top .45s ease}
+.zone{position:relative;height:110px;width:100%;margin-top:10px}
+input[type=text],textarea{font:inherit;width:100%;padding:12px;border-radius:16px;border:2px solid #ffb3cf;margin-top:8px;background:#fff}
+.sum{background:var(--cream);border-radius:20px;padding:12px;text-align:left;margin:12px 0}.sum p{margin:6px 0}
+.screen{padding-bottom:40px}.wm{position:fixed;bottom:8px;left:0;right:0;text-align:center;font:12px Fredoka,sans-serif;color:var(--ink);opacity:.5;pointer-events:none;z-index:5}
+.err{color:#c0214f;min-height:1.4em}.hid{display:none}
+.fl{position:fixed;bottom:-40px;pointer-events:none;z-index:9;animation:up var(--d) linear forwards}
+@keyframes up{to{transform:translateY(-115vh) rotate(40deg);opacity:0}}
+:focus-visible{outline:3px solid #7a4cff;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="wm">created by bouch</div>
+
+<section class="screen on" id="s1"><div class="card">
+<p class="script">♡ a little question for you ♡</p><div class="kt"></div>
+<h1>Пойдёшь со мной на свидание??? 🎀</h1><p>Страдая бездельем, я придумал кое-чо интересное для тебя 💗</p>
+<p style="margin-top:16px"><button class="btn big" id="yes">ДААААА! 💗</button></p>
+<div class="zone" id="zone"><button class="no" id="no">Нет 🙈</button></div></div></section>
+
+<section class="screen" id="s2"><div class="card">
+<h1>АААААА, УРАААА!!! 💗🎀</h1><p>Теперь выбираем день нашей встречи!</p>
+<div class="grid" id="days"></div>
+<div id="tb" class="hid"><h2>А во сколько тебе будет удобнее? 💌</h2><div class="grid" id="times"></div>
+<input type="text" id="ct" class="hid" maxlength="100" placeholder="Напиши удобное время" aria-label="Своё время"></div>
+<button class="btn" id="n2" disabled>Дальше 💗</button></div></section>
+
+<section class="screen" id="s3"><div class="card">
+<h1>А теперь самое интересное… 🎀</h1><p>Как проведём наше свидание? Выбирай, что тебе больше нравится 💗</p>
+<div class="grid plans" id="plans"></div>
+<textarea id="cp" class="hid" rows="3" maxlength="500" placeholder="Расскажи свой вариант" aria-label="Свой вариант"></textarea>
+<p class="err" id="err" role="alert"></p>
+<button class="btn" id="n3" disabled>Это мой выбор! 💗</button></div></section>
+
+<section class="screen" id="s4"><div class="card">
+<div class="kt"></div><h1>УРАААААА!!! 💗💗💗</h1><p>Кажется, у нас намечается свидание!!!</p>
+<div class="sum"><p>📅 День: <b id="o1"></b></p><p>🕒 Время: <b id="o2"></b></p><p>🎀 Наш план: <b id="o3"></b></p></div>
+<p>Спасибо, что согласилась провести со мной время 🥹💗</p>
+<p class="script">P.S. Это приглашение было сделано специально для тебя 🎀</p>
+<p><button class="btn" id="again">Посмотреть ещё раз 💌</button></p></div></section>
+
+<script src="config.js"></script>
+<script>
+const $=s=>document.querySelector(s),C=window.CONFIG||{};
+const S={id:crypto.randomUUID(),day:'',time:'',ct:'',plan:'',cp:'',sent:false,sending:false};
+const DAYS=[['Понедельник','🎀'],['Вторник','💗'],['Среда','⭐'],['Четверг','🌸'],['Пятница','🎀'],['Суббота','💗'],['Воскресенье','🌸']];
+const TIMES=['12:00–14:00','14:00–16:00','16:00–18:00','18:00–20:00','20:00 и позже','Предложу своё время'];
+const PLANS=[['🍰','Наконец попробуем те корпусные десертики'],['🌆','Прогулка по городу и красивые места'],['🖼️','Окультуриваться в галерее'],['🍷','Дегустнуть вина (но это только в пятницу)'],['💌','У меня есть свой вариант!']];
+const KITTY=`<svg class="kitty" viewBox="0 0 200 170" role="img" aria-label="Милый котик с бантиком"><g stroke="#5a2f2f" stroke-width="3" stroke-linejoin="round"><path d="M32 70 28 12 85 38Z" fill="#fff"/><path d="M168 70 172 12 115 38Z" fill="#fff"/><ellipse cx="100" cy="100" rx="78" ry="60" fill="#fff"/></g><ellipse cx="66" cy="102" rx="5" ry="7" fill="#5a2f2f"/><ellipse cx="134" cy="102" rx="5" ry="7" fill="#5a2f2f"/><ellipse cx="100" cy="114" rx="9" ry="6" fill="#ffd34d" stroke="#5a2f2f" stroke-width="2"/><g stroke="#5a2f2f" stroke-width="3" stroke-linecap="round"><path d="M18 100l30 5M18 120l30-6M182 100l-30 5M182 120l-30-6"/></g><circle cx="48" cy="120" r="9" fill="#ffb3cf" opacity=".6"/><circle cx="152" cy="120" r="9" fill="#ffb3cf" opacity=".6"/><g class="bow" stroke="#5a2f2f" stroke-width="2.5"><path d="M140 40 118 22v36ZM140 40l22-18v36Z" fill="#ff6fa5"/><circle cx="140" cy="40" r="8" fill="#ff4d8d"/></g></svg>`;
+document.querySelectorAll('.kt').forEach(e=>e.innerHTML=KITTY);
+
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function burst(n,set=['💗','🎀','⭐','🌸','💖']){if(reduce)return;for(let i=0;i<n;i++){const e=document.createElement('span');e.className='fl';e.textContent=set[i%set.length];
+e.style.cssText=`left:${Math.random()*96}vw;font-size:${16+Math.random()*22}px;--d:${4+Math.random()*4}s;animation-delay:${Math.random()*1.2}s`;document.body.append(e);setTimeout(()=>e.remove(),10000)}}
+setInterval(()=>burst(1,['💗','🎀','⭐']),1800);
+function show(n){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id=='s'+n));scrollTo(0,0)}
+
+// экран 1: убегающая кнопка (не блокирует клавиатуру: двигается только от мыши/касания)
+const no=$('#no'),zone=$('#zone');
+function dodge(){const z=zone.getBoundingClientRect(),b=no.getBoundingClientRect();
+no.style.left=Math.random()*(z.width-b.width)+'px';no.style.top=Math.random()*(z.height-b.height)+'px'}
+no.style.left='calc(50% - 40px)';no.style.top='30px';
+no.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')dodge()});
+no.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'){e.preventDefault();dodge()}});
+no.addEventListener('click',e=>{if(e.detail===0)dodge()});
+$('#yes').onclick=()=>{burst(30);setTimeout(()=>show(2),450)};
+
+// экран 2
+function group(el,items,fn,label){items.forEach(it=>{const b=document.createElement('button');b.className='opt';b.type='button';b.setAttribute('aria-pressed','false');b.innerHTML=label(it);
+b.onclick=()=>{el.querySelectorAll('.opt').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');fn(it);burst(6,['💗','✨'])};el.append(b)})}
+group($('#days'),DAYS,d=>{S.day=d[0];$('#tb').classList.remove('hid');chk()},d=>`<b>${d[1]}</b>${d[0]}`);
+group($('#times'),TIMES,t=>{S.time=t;$('#ct').classList.toggle('hid',t!==TIMES[5]);chk()},t=>t);
+$('#ct').oninput=e=>{S.ct=e.target.value.trim();chk()};
+function chk(){$('#n2').disabled=!(S.day&&S.time&&(S.time!==TIMES[5]||S.ct))}
+$('#n2').onclick=()=>{const fri=S.day==='Пятница',w=$('#plans').children[3];w.disabled=!fri;w.style.opacity=fri?'':'.5';
+if(!fri&&S.plan===PLANS[3][1]){S.plan='';w.setAttribute('aria-pressed','false');chk3()}show(3)};
+
+// экран 3
+group($('#plans'),PLANS,p=>{S.plan=p[1];$('#cp').classList.toggle('hid',p!==PLANS[4]);chk3()},p=>`${p[0]} ${p[1]}`);
+$('#cp').oninput=e=>{S.cp=e.target.value.trim();chk3()};
+function chk3(){$('#n3').disabled=!(S.plan&&(S.plan!==PLANS[4][1]||S.cp))}
+
+// сохранение: подтверждение только после успешного ответа сервера
+async function send(){
+if(S.sent)return fin();if(S.sending)return;S.sending=true;const b=$('#n3'),er=$('#err');b.disabled=true;er.textContent='Отправляю… 💌';
+try{if(!C.url||C.url.includes('YOUR-'))throw new Error('config');
+const r=await fetch(C.url+'/rest/v1/rpc/submit_response',{method:'POST',headers:{apikey:C.key,'Content-Type':'application/json'},
+body:JSON.stringify({p_id:S.id,p_day:S.day,p_time:S.time,p_custom_time:S.ct||null,p_plan:S.plan,p_custom_plan:S.cp||null})});
+if(!r.ok)throw new Error('http '+r.status);S.sent=true;er.textContent='';fin()}
+catch(e){er.textContent=e.message==='config'?'Сайт ещё не подключён к базе данных (см. config.js).':'Не получилось отправить ('+e.message+') — попробуй ещё раз 🥺';b.textContent='Попробовать ещё раз 💗'}
+finally{S.sending=false;b.disabled=false}}
+function fin(){$('#o1').textContent=S.day;$('#o2').textContent=S.time===TIMES[5]?S.ct:S.time;$('#o3').textContent=S.plan===PLANS[4][1]?S.cp:S.plan;show(4);burst(40)}
+$('#n3').onclick=send;$('#again').onclick=()=>{scrollTo(0,0);burst(40)};
+</script></body></html>
